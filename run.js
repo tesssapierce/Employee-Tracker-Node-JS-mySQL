@@ -101,7 +101,6 @@ class Run {
           connection.query("DELETE FROM department WHERE ?", {department_name: deleteDepartment}, function(err,res){
             if (err) throw err;
             console.log(res.affectedRows + " department named " + deleteDepartment + " deleted!\n");
-          }).then(function(){
             inquirer.prompt({
               type: "list",
               message: "Would you like to delete another department?",
@@ -237,7 +236,6 @@ class Run {
           connection.query("DELETE FROM role WHERE ?", {title: deleteRole}, function(err,res){
             if (err) throw err;
             console.log(res.affectedRows + " role(s) named " + deleteRole + " deleted!\n");
-          }).then(function(){
             inquirer.prompt({
               type: "list",
               message: "Would you like to delete another roles?",
@@ -384,7 +382,6 @@ class Run {
           connection.query("DELETE FROM employee WHERE ?", {id: employeeID}, function(err,res){
             if (err) throw err;
             console.log(res.affectedRows + " employee(s) named " + answer.employeeDelete + " deleted!\n");
-          }).then(function(){
             inquirer.prompt({
               type: "list",
               message: "Would you like to delete another employee?",
