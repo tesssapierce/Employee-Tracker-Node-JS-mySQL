@@ -36,7 +36,6 @@ function initialPrompt() {
 }
 
 function switchBoard(action) {
-  console.log(action)
   console.log("\n- - - - - - - - - - - - - - - - - - - - - - - - - -")
   console.log("Add new Departments, Roles, and Employees")
   inquirer.prompt(

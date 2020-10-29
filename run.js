@@ -1,5 +1,6 @@
 var inquirer = require("inquirer");
 var mysql = require("mysql");
+var app = require("./app.js")
 var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -7,7 +8,6 @@ var connection = mysql.createConnection({
   password: "mysqlpassword",
   database: "employeedb"
 });
-
 class Run {
   newDepartment() {
     var this2 = this;
@@ -28,7 +28,7 @@ class Run {
           switch (answer.newDeptSwitch) {
             case "Yes": this2.newDepartment()
               break;
-            default: initialPrompt()
+            default: this2.initialPrompt()
           }
         })
       })
@@ -66,7 +66,7 @@ class Run {
               switch(answer.updateDeptSwitch){
                 case "Yes" : this2.updateDepartment()
                   break;
-                default : console.log("Too bad")
+                default : this2.initialPrompt()
               }
             }).catch(function(err){
               console.log(err)
@@ -77,12 +77,13 @@ class Run {
     })
   }
   viewDepartment() {
+    var this2 = this;
     connection.query("SELECT * FROM department", function (err, res) {
       if (err) throw err;
       console.log("Loading current departments...")
       console.table(res)
     }).then(function(){
-      initialPrompt();
+      this2.initialPrompt();
     })
   }
   deleteDepartment() {
@@ -110,7 +111,7 @@ class Run {
               switch(answer.deleteDeptSwitch){
                 case "Yes" : this2.deleteDepartment()
                   break;
-                default : initialPrompt()
+                default : this2.initialPrompt()
               }
             })
           })
@@ -155,7 +156,7 @@ class Run {
             switch (answer.newRoleSwitch) {
               case "Yes": this2.newRole()
                 break;
-              default: initialPrompt()
+              default: this2.initialPrompt()
             }
           })
         })
@@ -200,7 +201,7 @@ class Run {
                 switch(answer.updateRolesSwitch){
                   case "Yes" : this2.updateRole()
                     break;
-                  default : console.log("Too bad")
+                  default : this2.initialPrompt()
                 }
               }).catch(function(err){
                 console.log(err)
@@ -212,12 +213,13 @@ class Run {
     }) 
   }
   viewRole(){
+    var this2 = this
     connection.query("SELECT role.title, role.salary, department.department_name FROM role INNER JOIN department ON role.department_id = department.id", function (err, res) {
       if (err) throw err;
       console.log("Loading current roles...")
       console.table(res)
     }).then(function(){
-      initialPrompt();
+      this2.initialPrompt();
     })    
   }
   deleteRole(){
@@ -245,7 +247,7 @@ class Run {
               switch(answer.deleteRoleSwitch){
                 case "Yes" : this2.deleteRole()
                   break;
-                default : initialPrompt()
+                default : this2.initialPrompt()
               }
             })
           })
@@ -299,7 +301,7 @@ class Run {
             switch (answer.newEmployeeSwitch) {
               case "Yes": this2.newEmployee()
                 break;
-              default: initialPrompt()
+              default: this2.initialPrompt()
             }
           })
         })
@@ -346,7 +348,7 @@ class Run {
                 switch(answer.updateEmployeeSwitch){
                   case "Yes" : this2.updateEmployee()
                     break;
-                  default : console.log("Too bad")
+                  default : this2.initialPrompt()
                 }
               }).catch(function(err){
                 console.log(err)
@@ -358,12 +360,13 @@ class Run {
     })  
   }
   viewEmployee() {
+    var this2 = this
     console.log("Loading all employees...")
     connection.query("SELECT employee.id, department.department_name AS department, role.title, employee.first_name, employee.last_name, manager.first_name AS manager_first, manager.last_name AS manager_last, role.salary FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON manager.id = employee.manager_id", function (err, res) {
       if (err) throw err;
       console.table(res)
     }).then(function(){
-      initialPrompt();
+      this2.initialPrompt();
     })
   }
   deleteEmployee() {
@@ -391,7 +394,7 @@ class Run {
               switch(answer.deleteEmployeeSwitch){
                 case "Yes" : this2.deleteEmployee()
                   break;
-                default : initialPrompt()
+                default : this2.initialPrompt()
               }
             })
           })
