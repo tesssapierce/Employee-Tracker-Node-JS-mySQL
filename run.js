@@ -28,7 +28,7 @@ class Run {
           switch (answer.newDeptSwitch) {
             case "Yes": this2.newDepartment()
               break;
-            default: this2.initialPrompt()
+            default: initialPrompt()
           }
         })
       })
